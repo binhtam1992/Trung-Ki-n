@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra cứu chân S22</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result p {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            body {
+                margin: 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+            input[type="text"], button {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 style="text-align: center;">Tra cứu vị trí chân sọc S22 Series</h2>
+
+    <label for="pixel">Nhập số pixel:</label>
+    <input type="text" id="pixel" name="pixel" oninput="traCuu()">
+
+    <div class="result">
+        <p>→ KẾT QUẢ ←</p>
+
+        <label for="vi_tri_soc">Vị trí sọc:</label>
+        <input type="text" id="vi_tri_soc" name="vi_tri_soc" readonly>
+
+        <label for="chan_tuong_ung">Chân tương ứng:</label>
+        <input type="text" id="chan_tuong_ung" name="chan_tuong_ung" readonly>
+
+        <label for="mau">Màu:</label>
+        <input type="text" id="mau" name="mau" readonly>
+
+        <div class="error" id="error"></div>
+    </div>
+
+    <button onclick="clearForm()">Xóa dữ liệu</button>
+</div>
+
+<script>
+function traCuu() {
+    const pixelInput = document.getElementById('pixel').value.trim();
+    const pixel = parseInt(pixelInput);
+    const errorDiv = document.getElementById('error');
+    const viTriSoc = document.getElementById('vi_tri_soc');
+    const chanTuongUng = document.getElementById('chan_tuong_ung');
+    const mau = document.getElementById('mau');
+
+    // Reset fields
+    errorDiv.innerHTML = '';
+    viTriSoc.value = '';
+    chanTuongUng.value = '';
+    mau.value = '';
+    mau.style.backgroundColor = '#fff';
+
+    if (pixelInput === '') return;
+
+    if (isNaN(pixel) || pixel < 1 || pixel > 2160) {
+        errorDiv.innerHTML = 'Mạch từ 1 tới 2160 thôi bạn ơi.';
+        return;
+    }
+
+    // Xác định màu
+    if (pixel % 2 === 0) {
+        mau.value = 'Màu xanh';
+        mau.style.backgroundColor = '#90ee90'; // Xanh lá cây nhạt
+    } else {
+        mau.value = 'Màu hồng';
+        mau.style.backgroundColor = '#ffb6c1'; // Hồng nhạt
+    }
+
+    let viTri = '';
+    let chan = 0;
+
+    if (pixel >= 1 && pixel <= 977) {
+        viTri = 'Bên trái màn hình';
+        chan = 976 - (pixel - 1) * 2;
+    } else if (pixel >= 978 && pixel <= 1369) {
+        viTri = 'Giữa màn hình';
+        chan = pixel;
+    } else if (pixel >= 1370 && pixel <= 2160) {
+        viTri = 'Bên phải màn hình';
+        chan = 1555 + (pixel - 1370) * 2;
+    }
+
+    viTriSoc.value = viTri;
+    chanTuongUng.value = chan;
+}
+
+function clearForm() {
+    document.getElementById('pixel').value = '';
+    document.getElementById('vi_tri_soc').value = '';
+    document.getElementById('chan_tuong_ung').value = '';
+    document.getElementById('mau').value = '';
+    document.getElementById('error').innerHTML = '';
+    document.getElementById('mau').style.backgroundColor = '#fff';
+}
+</script>
+<div class="footer">
+    📍 TRUNG KIÊN MOBILE - 189 LÊ ĐÌNH LÝ - ĐÀ NẴNG<br>
+    ☎️ SĐT: 0902 626 626
+</div>
+
+</body>
+</html>
